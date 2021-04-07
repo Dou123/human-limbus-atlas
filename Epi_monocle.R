@@ -19,10 +19,9 @@ cds <- newCellDataSet(data,
 cds <- estimateSizeFactors(cds)
 cds <- estimateDispersions(cds)
 cds = detectGenes(cds,min_expr = 1)
-expressed_genes = row.names(subset(fData(cds),num_cells_expressed>10))
 pData(cds)$Total_mRNA = Matrix::colSums(exprs(cds))
 
-clustering_DEGs = differentialGeneTest(cds,fullModelFormulaStr = paste0("~", seurat_clusters))   
+clustering_DEGs = differentialGeneTest(cds,fullModelFormulaStr = paste0("~", "seurat_clusters"))   
 ordering_genes <- row.names (subset(clustering_DEGs, qval < 0.01))
 cds = setOrderingFilter(cds,ordering_genes = ordering_genes)
 
